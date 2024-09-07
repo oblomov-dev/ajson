@@ -21,6 +21,9 @@ class zcl_ajson definition
       to_abap for zif_ajson~to_abap,
       array_to_string_table for zif_ajson~array_to_string_table.
 
+
+
+
     aliases:
       clear for zif_ajson~clear,
       set for zif_ajson~set,
