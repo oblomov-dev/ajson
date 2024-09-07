@@ -152,7 +152,7 @@ CLASS zcl_ajson IMPLEMENTATION.
 
   method create_from.
 
-    data lo_mutator_queue type ref to lcl_mutator_queue.
+    data lo_mutator_queue1 type ref to lcl_mutator_queue.
 
     if ii_source_json is not bound.
       zcx_ajson_error=>raise( 'Source not bound' ).
@@ -167,15 +167,15 @@ CLASS zcl_ajson IMPLEMENTATION.
     if ii_filter is not bound and ii_mapper is not bound.
       ro_instance->mt_json_tree = ii_source_json->mt_json_tree.
     else.
-      create object lo_mutator_queue.
+      create object lo_mutator_queue1.
       if ii_mapper is bound.
         " Mapping goes first. But maybe it should be a freely definable queue of processors ?
-        lo_mutator_queue->add( lcl_mapper_runner=>new( ii_mapper ) ).
+        lo_mutator_queue1->add( lcl_mapper_runner=>new( ii_mapper ) ).
       endif.
       if ii_filter is bound.
-        lo_mutator_queue->add( lcl_filter_runner=>new( ii_filter ) ).
+        lo_mutator_queue1->add( lcl_filter_runner=>new( ii_filter ) ).
       endif.
-      lo_mutator_queue->lif_mutator_runner~run(
+      lo_mutator_queue1->lif_mutator_runner~run(
         exporting
           it_source_tree = ii_source_json->mt_json_tree
         importing
